@@ -1,5 +1,12 @@
 Basic KAFKA Commands
 
+WHILE WORKING IN docker
+-> docker-compose up -d; docker ps
+-> add docker exec -it <container id>; docker exec -it <kafka-container-id> /opt/kafka/bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic my-topic
+-> docker exec -it <container> bash
+
+docker exec -it a3f7e1518c2e /opt/kafka/
+
 START ZOOKEEPER
 bin/zookeeper-server-start.sh config/zookeeper.properties
 
@@ -23,7 +30,7 @@ TOPIC DETAILS
 bin/kafka-topics.sh \
 --bootstrap-server localhost:9092 \
 --describe \
---topic animals
+--topic __consumer_offsets 
 
 START CONSOLE PRODUCER
 bin/kafka-console-producer.sh \
@@ -44,21 +51,21 @@ bin/kafka-console-consumer.sh \
 START CONSOLE CONSUMER AND READ MESSAGES FROM BEGINNING FROM SPECIFIC PARTITION
 bin/kafka-console-consumer.sh \
 --bootstrap-server localhost:9092 \
---partition 2 \
+--partition 1 \
 --topic animals \
 --from-beginning
 
 START CONSOLE CONSUMER AND READ MESSAGES FROM SPECIFIC OFFSET FROM SPECIFIC PARTITION
 bin/kafka-console-consumer.sh \
 --bootstrap-server localhost:9092 \
---partition 2 \
+--partition 1 \
 --topic animals \
 --offset 0
 
 START CONSOLE CONSUMER WITH SPECIFIC CONSUMER GROUP
 bin/kafka-console-consumer.sh \
 --bootstrap-server localhost:9092 \
---topic test \
+--topic animals \
 --group test \
 --from-beginning
 
